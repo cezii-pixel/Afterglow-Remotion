@@ -19,11 +19,10 @@ jobs:
         run: npm install
 
       - name: Render Remotion Video
-        run: npx remotion render src/Root.tsx AfterglowIntro out/video.mp4 --log=verbose --overwrite
+        run: npx remotion render src/Root.tsx AfterglowIntro out/video.mp4 --codec=h264 --pixel-format=yuv420p --overwrite
 
       - name: Upload Video Artifact
         uses: actions/upload-artifact@v4
         with:
           name: hasil-video
           path: out/video.mp4
-
