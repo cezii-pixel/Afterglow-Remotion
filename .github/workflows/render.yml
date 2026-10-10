@@ -10,12 +10,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - run: npm install
-      - run: npx remotion render src/Root.tsx AfterglowIntro out/video.mp4 --gl=angle --concurrency=1
-      - uses: actions/upload-artifact@v4
+
+      - name: Install System Dependencies & FFmpeg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg chromium-browser
+
+      - name: Install Node Dependencies
+        run: npm install
+
+      - name: Render Remotion Video
+        run: npx remotion render src/Root.tsx AfterglowIntro out/video.mp4 --gl=swangle
+
+      - name: Upload Video Artifact
+        uses: actions/upload-artifact@v4
         with:
           name: hasil-video
           path: out/video.mp4
