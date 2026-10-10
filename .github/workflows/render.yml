@@ -15,7 +15,7 @@ jobs:
           node-version: '18'
       - run: npm ci
       - run: npx remotion render src/index.ts MainComposition out/video.mp4
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: hasil-video
           path: out/video.mp4
