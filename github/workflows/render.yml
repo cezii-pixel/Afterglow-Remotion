@@ -1,0 +1,21 @@
+name: Render Video
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - run: npm ci
+      - run: npx remotion render src/index.ts MainComposition out/video.mp4
+      - uses: actions/upload-artifact@v3
+        with:
+          name: hasil-video
+          path: out/video.mp4
