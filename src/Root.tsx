@@ -18,3 +18,5 @@ export const Root = () => {
     />
   );
 };
+
+registerRoot(Root);
