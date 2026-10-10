@@ -1,13 +1,13 @@
-import { Composition } from 'remotion';
+import { Composition, registerRoot } from 'remotion';
 import { AfterglowMotionIntro } from './components/AfterglowMotionIntro';
-import './styles/globals.css'; // Memuat styling global dari paket UI[span_3](start_span)[span_3](end_span)
+import './styles/globals.css';
 
 export const Root = () => {
   return (
     <Composition
       id="AfterglowIntro"
       component={AfterglowMotionIntro}
-      durationInFrames={150} // Durasi 5 detik pada 30 FPS
+      durationInFrames={150}
       fps={30}
       width={1920}
       height={1080}
@@ -20,3 +20,4 @@ export const Root = () => {
 };
 
 registerRoot(Root);
+
