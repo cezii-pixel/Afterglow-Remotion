@@ -2,10 +2,7 @@ name: Render Video
 
 on:
   push:
-name: Render Video
-
-on:
-  push:
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
@@ -22,15 +19,11 @@ jobs:
         run: npm install
 
       - name: Render Remotion Video
-        run: npx remotion render src/Root.tsx AfterglowIntro out/video.mp4 --codec=h264 --overwrite
+        run: npx remotion render src/Root.tsx AfterglowIntro out/video.mp4 --codec=h264 --pixel-format=yuv420p --gl=angle --overwrite
 
       - name: Upload Video Artifact
         uses: actions/upload-artifact@v4
         with:
           name: hasil-video
           path: out/video.mp4
-
-
-
-
 
