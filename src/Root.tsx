@@ -1,24 +1,23 @@
 import { Composition, Series, registerRoot } from "remotion";
-import { AfterglowMotionIntro } from "./components/AfterglowMotionIntro";
-import { AfterglowUIAnim } from "./components/AfterglowUIAnim";
-import { AfterglowExportComplete } from "./components/AfterglowExportComplete";
+import { AfterglowMotionIntro } from "./AfterglowMotionIntro";
+import { AfterglowUIAnim } from "./AfterglowUIAnim";
+import { AfterglowExportComplete } from "./AfterglowExportComplete";
 import "./styles/globals.css";
 
-// Komponen Master untuk menggabungkan Intro -> Workspace -> Outro secara berurutan
 export const AfterglowMaster = () => {
   return (
     <Series>
-      {/* 1. Intro Animation (Durasi: 90 frame / 3 detik) */}
+      {/* 1. Intro Animation */}
       <Series.Sequence durationInFrames={90}>
         <AfterglowMotionIntro />
       </Series.Sequence>
 
-      {/* 2. UI Workspace & Editor (Durasi: 360 frame / 12 detik) */}
+      {/* 2. UI Workspace & Editor */}
       <Series.Sequence durationInFrames={360}>
         <AfterglowUIAnim />
       </Series.Sequence>
 
-      {/* 3. Export Complete / Outro (Durasi: 120 frame / 4 detik) */}
+      {/* 3. Export Complete / Outro */}
       <Series.Sequence durationInFrames={120}>
         <AfterglowExportComplete />
       </Series.Sequence>
@@ -29,7 +28,7 @@ export const AfterglowMaster = () => {
 export const Root = () => {
   return (
     <>
-      {/* Gabungan Full Video (Total: 570 frame / ~19 detik) */}
+      {/* Gabungan Full Video */}
       <Composition
         id="AfterglowFullVideo"
         component={AfterglowMaster}
@@ -39,7 +38,7 @@ export const Root = () => {
         height={720}
       />
 
-      {/* Komposisi Parsial (Satuan untuk kebutuhan preview/testing) */}
+      {/* Komposisi Parsial (Satuan) */}
       <Composition
         id="AfterglowIntro"
         component={AfterglowMotionIntro}
@@ -70,5 +69,4 @@ export const Root = () => {
   );
 };
 
-// PENTING: Mendaftarkan entry point utama untuk Remotion Bundler / CLI / GitHub Actions
 registerRoot(Root);
