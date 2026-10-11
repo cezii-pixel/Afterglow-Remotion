@@ -15,13 +15,25 @@ const start = async () => {
     publicDir: path.resolve('./public'),
   });
 
-  console.log("🎬 Memilih komposisi video...");
+  console.log("🎬 Memilih komposisi 'AfterglowIntro'...");
   const composition = await selectComposition({
     serveUrl: bundleLocation,
     id: 'AfterglowIntro',
   });
 
-  console.log("🎥 Memulai proses rendering video dengan Chromium Sandbox Flags...");
+  console.log("📊 DETAIL KOMPOSISI:", {
+    id: composition.id,
+    width: composition.width,
+    height: composition.height,
+    fps: composition.fps,
+    durationInFrames: composition.durationInFrames,
+  });
+
+  if (composition.durationInFrames <= 0 || composition.width <= 0) {
+    throw new Error("❌ Error: Komposisi memiliki ukuran atau durasi 0!");
+  }
+
+  console.log("🎥 Memulai render media dengan log verbose...");
   await renderMedia({
     composition,
     serveUrl: bundleLocation,
@@ -29,15 +41,21 @@ const start = async () => {
     pixelFormat: 'yuv420p',
     outputLocation: path.resolve('./out/video.mp4'),
     overwrite: true,
+    logLevel: 'verbose',
     chromiumOptions: {
-      args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage',
+        '--disable-gpu',
+      ],
     },
   });
 
-  console.log("✨ Render selesai dengan sukses!");
+  console.log("✨ Render selesai!");
 };
 
 start().catch((err) => {
-  console.error("❌ Terjadi error saat render:", err);
+  console.error("❌ Render Gagal:", err);
   process.exit(1);
 });
