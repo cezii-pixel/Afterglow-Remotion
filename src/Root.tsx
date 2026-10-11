@@ -1,7 +1,7 @@
 import { Composition, Series, registerRoot } from "remotion";
-import { AfterglowMotionIntro } from "./components/AfterglowMotionIntro";
-import { AfterglowUIAnim } from "./components/AfterglowUIAnim";
-import { AfterglowExportComplete } from "./components/AfterglowExportComplete";
+import { AfterglowMotionIntro } from "./AfterglowMotionIntro";
+import { AfterglowUIAnim } from "./AfterglowUIAnim";
+import { AfterglowExportComplete } from "./AfterglowExportComplete";
 import "./styles/globals.css";
 
 export const AfterglowMaster = () => {
@@ -69,5 +69,4 @@ export const Root = () => {
   );
 };
 
-// WAJIB ADA agar Remotion bundler tidak error
 registerRoot(Root);
