@@ -1,23 +1,24 @@
 import { Composition, Series, registerRoot } from "remotion";
-import { AfterglowMotionIntro } from "./AfterglowMotionIntro";
-import { AfterglowUIAnim } from "./AfterglowUIAnim";
-import { AfterglowExportComplete } from "./AfterglowExportComplete";
+import { AfterglowMotionIntro } from "./components/AfterglowMotionIntro";
+import { AfterglowUIAnim } from "./components/AfterglowUIAnim";
+import { AfterglowExportComplete } from "./components/AfterglowExportComplete";
 import "./styles/globals.css";
 
+// Komponen Master untuk menggabungkan Intro -> Workspace -> Outro secara berurutan
 export const AfterglowMaster = () => {
   return (
     <Series>
-      {/* 1. Intro Animation */}
+      {/* 1. Intro Animation (Durasi: 90 frame / 3 detik) */}
       <Series.Sequence durationInFrames={90}>
         <AfterglowMotionIntro />
       </Series.Sequence>
 
-      {/* 2. UI Workspace & Editor */}
+      {/* 2. UI Workspace & Editor (Durasi: 360 frame / 12 detik) */}
       <Series.Sequence durationInFrames={360}>
         <AfterglowUIAnim />
       </Series.Sequence>
 
-      {/* 3. Export Complete / Outro */}
+      {/* 3. Export Complete / Outro (Durasi: 120 frame / 4 detik) */}
       <Series.Sequence durationInFrames={120}>
         <AfterglowExportComplete />
       </Series.Sequence>
@@ -28,7 +29,7 @@ export const AfterglowMaster = () => {
 export const Root = () => {
   return (
     <>
-      {/* Gabungan Full Video */}
+      {/* Gabungan Full Video (Total: 570 frame / ~19 detik) */}
       <Composition
         id="AfterglowFullVideo"
         component={AfterglowMaster}
@@ -38,7 +39,7 @@ export const Root = () => {
         height={720}
       />
 
-      {/* Komposisi Parsial (Satuan) */}
+      {/* Komposisi Parsial (Satuan untuk preview/testing) */}
       <Composition
         id="AfterglowIntro"
         component={AfterglowMotionIntro}
@@ -69,4 +70,5 @@ export const Root = () => {
   );
 };
 
+// WAJIB ADA agar Remotion Bundler / GitHub Actions membaca entry point
 registerRoot(Root);
