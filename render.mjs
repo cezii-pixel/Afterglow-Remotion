@@ -4,7 +4,6 @@ import path from 'path';
 import fs from 'fs';
 
 const start = async () => {
-  // Pastikan folder out/ ada agar FFmpeg tidak gagal menyimpan file
   const outDir = path.resolve('./out');
   if (!fs.existsSync(outDir)) {
     fs.mkdirSync(outDir, { recursive: true });
@@ -22,7 +21,7 @@ const start = async () => {
     id: 'AfterglowIntro',
   });
 
-  console.log("🎥 Memulai proses rendering video...");
+  console.log("🎥 Memulai proses rendering video dengan Chromium Sandbox Flags...");
   await renderMedia({
     composition,
     serveUrl: bundleLocation,
@@ -30,6 +29,9 @@ const start = async () => {
     pixelFormat: 'yuv420p',
     outputLocation: path.resolve('./out/video.mp4'),
     overwrite: true,
+    chromiumOptions: {
+      args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
+    },
   });
 
   console.log("✨ Render selesai dengan sukses!");
