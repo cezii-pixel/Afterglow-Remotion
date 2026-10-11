@@ -1,17 +1,70 @@
-import { Composition, registerRoot } from 'remotion';
-import { AfterglowMotionIntro } from './components/AfterglowMotionIntro';
+import { Composition, Series } from "remotion";
+import { AfterglowMotionIntro } from "./components/AfterglowMotionIntro";
+import { AfterglowUIAnim } from "./components/AfterglowUIAnim";
+import { AfterglowExportComplete } from "./components/AfterglowExportComplete";
+import "./styles/globals.css"; // Sesuaikan jalur CSS jika ada di folder src/styles/
 
-export const Root = () => {
+export const AfterglowMaster = () => {
   return (
-    <Composition
-      id="AfterglowIntro"
-      component={AfterglowMotionIntro}
-      durationInFrames={150}
-      fps={30}
-      width={1920}
-      height={1080}
-    />
+    <Series>
+      {/* 1. Intro Animation */}
+      <Series.Sequence durationInFrames={90}>
+        <AfterglowMotionIntro />
+      </Series.Sequence>
+
+      {/* 2. UI Workspace & Editor */}
+      <Series.Sequence durationInFrames={360}>
+        <AfterglowUIAnim />
+      </Series.Sequence>
+
+      {/* 3. Export Complete / Outro */}
+      <Series.Sequence durationInFrames={120}>
+        <AfterglowExportComplete />
+      </Series.Sequence>
+    </Series>
   );
 };
 
-registerRoot(Root);
+export const Root = () => {
+  return (
+    <>
+      {/* Gabungan Full Video */}
+      <Composition
+        id="AfterglowFullVideo"
+        component={AfterglowMaster}
+        durationInFrames={570}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+
+      {/* Komposisi Parsial (Satuan) */}
+      <Composition
+        id="AfterglowIntro"
+        component={AfterglowMotionIntro}
+        durationInFrames={90}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      
+      <Composition
+        id="AfterglowWorkspace"
+        component={AfterglowUIAnim}
+        durationInFrames={360}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      
+      <Composition
+        id="AfterglowOutro"
+        component={AfterglowExportComplete}
+        durationInFrames={120}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+    </>
+  );
+};
