@@ -1,4 +1,4 @@
-import { Composition } from 'remotion';
+import { Composition, registerRoot } from 'remotion';
 import { AfterglowMotionIntro } from './components/AfterglowMotionIntro';
 
 export const Root = () => {
@@ -13,3 +13,5 @@ export const Root = () => {
     />
   );
 };
+
+registerRoot(Root);
